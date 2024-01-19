@@ -32,6 +32,6 @@ icerink_data
 
 
 #### Save data ####
-write_csv(icerink_data, "inputs/data/icerink_data.csv") 
+write_csv(icerink_data, "inputs/data/raw_data.csv") 
 
          

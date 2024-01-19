@@ -25,6 +25,8 @@ max_width <- 200
 lengths <- round(runif(num_rows, min = min_length, max = max_length), 2)
 widths <- round(runif(num_rows, min = min_width, max = max_width), 2)
 
+has_boards <- sample(c(TRUE, FALSE), size = num_rows, replace = TRUE)
+
 area_size <- round(lengths * widths, 2)
 
 simulated_rink_size_data <-
@@ -32,7 +34,8 @@ simulated_rink_size_data <-
     Outdoor_Rink_ID = outdoor_rink_ids,
     Pad_Length = lengths,
     Pad_Width = widths,
-    Pad_Size = area_size
+    Pad_Size = area_size,
+    has_Boards = has_boards
   )
 
 # Some Tests
