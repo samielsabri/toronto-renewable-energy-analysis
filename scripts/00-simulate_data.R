@@ -1,19 +1,55 @@
 #### Preamble ####
-# Purpose: Simulates... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 11 February 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Simulates Toronto Outdoor Ice Rinks dataset
+# Author: Sami El Sabri
+# Date: 19 January 2024
+# Contact: sami.elsabri@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
 
 
 #### Workspace setup ####
 library(tidyverse)
-# [...UPDATE THIS...]
+library(dplyr)
 
 #### Simulate data ####
-# [...ADD CODE HERE...]
+set.seed(456)
+
+num_rows <- 50
+outdoor_rink_ids <- 1:num_rows
+
+min_length <- 75
+min_width <- 75
+
+max_length <- 200
+max_width <- 200
+
+lengths <- round(runif(num_rows, min = min_length, max = max_length), 2)
+widths <- round(runif(num_rows, min = min_width, max = max_width), 2)
+
+area_size <- round(lengths * widths, 2)
+
+simulated_rink_size_data <-
+  data.frame(
+    Outdoor_Rink_ID = outdoor_rink_ids,
+    Pad_Length = lengths,
+    Pad_Width = widths,
+    Pad_Size = area_size
+  )
+
+# Some Tests
+
+simulated_rink_size_data$Outdoor_Rink_ID %>% unique() == c(1:num_rows)
+simulated_rink_size_data$Outdoor_Rink_ID %>% unique() %>% length() == num_rows
+
+simulated_rink_size_data$Pad_Length %>% min() >= min_length
+simulated_rink_size_data$Pad_Length %>% max() <= max_length
+
+simulated_rink_size_data$Pad_Width %>% min() >= min_width
+simulated_rink_size_data$Pad_Width %>% max() <= max_width
+
+simulated_rink_size_data$Pad_Size == 
+  round(simulated_rink_size_data$Pad_Length *
+      simulated_rink_size_data$Pad_Width, 2)
+
 
 
 
