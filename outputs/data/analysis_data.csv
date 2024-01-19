@@ -1,20 +1,62 @@
-width,length,flying_time
-70,111,1.83
-57,127,2.32
-59,92,2.05
-70,75,1.1
-62,112,2.32
-68,103.5,0.5
-58,108,1.7
-79,114,0.86
-56,186,3.42
-87,68,1.37
-50,118,2.68
-49,186,1.83
-61,116,1.32
-60,127,1
-56,184,2.79
-69,124,1.4
-60,95,1.12
-44,137,1.28
-63,125,1.35
+id,name,length,width,has_boards,size
+43568,Albert Campbell Square - Outdoor Ice Pad,NA,NA,No,NA
+43573,Harry Gairey - Alexandra Park - Outdoor Ice Pad,180,120,Yes,21600
+43575,Broadlands Park - Outdoor Ice Pad,185,85,Yes,15725
+43576,Buttonwood Park - Outdoor Ice Pad,150,120,No,18000
+43577,Campbell Avenue Playground - Outdoor Ice Pad,180,80,Yes,14400
+43562,Cedarvale Park - Outdoor Ice Pad,NA,NA,Yes,NA
+43578,Sid Smith - Outdoor Ice Pad,180,50,Yes,9000
+43581,Dieppe Park - Outdoor Ice Pad,180,120,Yes,21600
+43727,Dufferin Grove Park - Outdoor Ice Pad (1),180,120,Yes,21600
+43582,Dufferin Grove Park - Outdoor Ice Pad (2),NA,NA,No,NA
+75906,Ethennonnhawahstihnen Park - Outdoor Ice Pad,NA,NA,NA,NA
+14276,Giovanni Caboto - Outdoor Ice Pad (1),180,120,Yes,21600
+43583,Giovanni Caboto - Outdoor Ice Pad (2),NA,NA,No,NA
+43585,Glen Long Community Centre - Outdoor Ice Pad,185,85,Yes,15725
+43586,Greenwood Park - Outdoor Ice Pad,180,120,Yes,21600
+14282,High Park - Outdoor Ice Pad (1),180,120,Yes,21600
+43587,High Park - Outdoor Ice Pad (2),NA,NA,No,NA
+14283,Hodgson Public School - Outdoor Ice Pad (1),180,120,Yes,21600
+43588,Hodgson Public School - Outdoor Ice Pad (2),NA,NA,No,NA
+43589,Humber Valley Rink - Outdoor Ice Pad,185,80,Yes,14800
+43590,Irving W. Chapley Community Centre - Outdoor Ice Pad,185,85,Yes,15725
+43591,Jimmie Simpson Park - Outdoor Ice Pad,100,80,Yes,8000
+43572,Joseph Bannon Park - Outdoor Ice Pad,NA,NA,No,NA
+44162,Kew Gardens - Outdoor Ice Pad,182,72,Yes,13104
+43563,Lambton - Kingsway Park - Outdoor Ice Pad,120,100,No,12000
+43564,Ledbury Park - Outdoor Ice Pad,289,49,Yes,14161
+60143,Mccowan District Park - Outdoor Ice Pad,NA,NA,Yes,NA
+43592,Mel Lastman Square - Outdoor Ice Pad,132,58,No,7656
+43593,Monarch Park - Outdoor Ice Pad,180,80,Yes,14400
+43599,Nathan Phillips Square - Outdoor Ice Pad,182,100,No,18200
+43728,North Toronto Memorial - Outdoor Ice Pad (1),180,135,Yes,24300
+43584,North Toronto Memorial - Outdoor Ice Pad (2),NA,NA,No,NA
+43566,Otter Creek Centre - Outdoor Ice Pad (1),180,120,Yes,21600
+14070,Otter Creek Centre - Outdoor Ice Pad (2),NA,NA,No,NA
+43594,Prince Of Wales Rink - Outdoor Ice Pad,195,85,Yes,16575
+72802,Queensway Park - Outdoor Ice Pad,150,70,No,10500
+14293,Ramsden Park - Outdoor Ice Pad (1),180,120,Yes,21600
+43596,Ramsden Park - Outdoor Ice Pad (2),NA,NA,No,NA
+43598,Regent Park Athletic Grounds - Outdoor Ice Pad,120,80,Yes,9600
+43614,Rennie Park - Outdoor Ice Pad,185,80,Yes,14800
+43567,Rivercrest Rink - Outdoor Ice Pad,150,120,No,18000
+71802,Riverdale Park East - Outdoor Ice Pad,180,80,Yes,14400
+43601,Rosedale Park - Outdoor Ice Pad,182,78,Yes,14196
+43602,Royal Crest Rink - Outdoor Ice Pad,145,120,No,17400
+43574,Ryerson Community Park - Outdoor Ice Pad,110,94,No,10340
+43569,Paul Quarrington - Outdoor Ice Pad,NA,NA,No,NA
+43604,Sir Adam Beck Rink - Outdoor Ice Pad,145,120,Yes,17400
+43605,Summerlea Rink - Outdoor Ice Pad,120,90,No,10800
+43606,Sunnydale Acres Rink - Outdoor Ice Pad,185,85,Yes,15725
+43607,Trinity Bellwoods Park - Outdoor Ice Pad,180,80,Yes,14400
+43608,Valleyfield Park - Outdoor Ice Pad,150,73,No,10950
+43570,Van Horne Park - Outdoor Ice Pad,185,85,No,15725
+43609,Wallace Emerson Park - Outdoor Ice Pad (1),180,120,Yes,21600
+14306,Wallace Emerson Park - Outdoor Ice Pad (2),NA,NA,No,NA
+43610,Wedgewood Park - Etobicoke - Outdoor Ice Pad,150,75,No,11250
+43571,West Deane Park - Outdoor Ice Pad,185,85,Yes,15725
+44022,West Mall Rink - Outdoor Ice Pad (1),185,80,Yes,14800
+43580,West Mall Rink - Outdoor Ice Pad (2),NA,NA,No,NA
+43611,Westgrove Rink - Outdoor Ice Pad,123,100,No,12300
+43612,Westway Outdoor Rink - Outdoor Ice Pad,185,85,Yes,15725
+43613,Withrow Park - Outdoor Ice Pad,180,80,Yes,14400
