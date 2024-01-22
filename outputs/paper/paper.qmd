@@ -1,13 +1,11 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Toronto's Green Future: A Decade of Trends in City-Owned Renewable Energy Installations"
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: LINK."
-date: today
+  - Sami El Sabri
+thanks: "Code and data are available at: https://github.com/samielsabri/toronto-renewable-energy-analysis"
+date: 01-24-2024
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "This paper investigates the trend of renewable energy installations on City-owned buildings in Toronto by analyzing an openly accessible dataset. The analysis reveals a significant increase in installations, particularly in 2017 and 2018, aligning with the city's commitment to carbon neutrality by 2040. There is also a notable diversification in installation types for different urban contexts. The findings offer an important insght into the dynamic nature of renewable energy adoption, and highlights the need for continued efforts in transitioning towards cleaner energy systems. "
 format: pdf
 number-sections: true
 bibliography: references.bib
@@ -19,197 +17,116 @@ bibliography: references.bib
 #| message: false
 
 library(tidyverse)
-library(palmerpenguins)
+library(knitr)
+library(ggplot2)
 ```
 
 
 # Introduction
 
-You can and should cross-reference sections and sub-sections. 
+As the global community is increasingly faced with the challenges posed by climate change, cities worldwide are increasingly recognizing the need of transitioning towards cleaner and more sustainable energy sources [@perea]. In fact, how societies use and produce energy has proven to be one of the most important drivers of climate change, and thus a major point of intervention [@sims]. Canada is a signatory to the Paris convention, an international treaty on climate change, and has put forward investment in renewable energy sources as a key component of the government's commitment [@canadaParis]. In particular, it has vowed to invest $964 million in renewable energy installation projects and intends to increasingly shift towards such sources [@canadaParis].
 
-The remainder of this paper is structured as follows. @sec-data....
+As the largest city in Canada, Toronto stands at the forefront of sustainable urban development in the country. There are multiple initiatives, both at the provincial and local level, to increase the usage of renewable energy such as SolarTO which offers financial incentives [@solarTO], or the Conservation Authority's Renewable Energy Program [@trca]. Most notably, the City of Toronto itself vowed to transform city buildings and facilities according to the Net Zero Carbon Plan, most recently in 2022. The city government plans to achieve net zero in such buildings by 2040 by installing more and more renewable energy systems [@citytoronto], but it is unclear to what extent they have been addressing the urgency of transitioning towards renewable energy. 
 
+This paper may bridge this knowledge gap by analyzing a publically available dataset on renewable energy installations in Toronto. The findings reveal a compelling upward trajectory in the number of installations, notably peaking in 2017 and 2018. Moreover, while there is no clear trend in the kilowatt (kW) size of installations, we can observe efforts to diversify the types of installations, with both smaller and larger installations seeing an increase.
+
+In order to investigate the trend of renewable energy installations to assess whether there is indeed an upwards trajectory in both the quantity and quality of installations by the City of Toronto, this paper has been structured as follows: First, the raw dataset of interest is introduced and relevant variables explained (@sec-data). The reproducible data cleaning process can be found in the appendix (@sec-appendix). Then, the cleaned dataset is explained and important summary statistics outlined. Finally, the data is visualized and contextualized in order to draw conclusions from it, which contribute to the broader understanding of Toronto's renewable energy efforts. 
 
 
 # Data {#sec-data}
 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+The dataset that is analyzed in this paper using R [@citeR] was obtained on the City of Toronto's Open Data Portal and is titled "Renewable Energy Installations" [@opendatatoronto]. Specifically, they collected the locations of installed renewable energy systems on city-owned buildings such as photovoltaic, solar pool heating, and geothermal installations. The aforementioned increased relevance of renewable energy in Toronto's combat with climate change gave rise to this dataset. However, one limitation of this dataset is that it only includes city divisions, but not all city agencies or corporations. This highlights a key difficulty of measuring data related to renewable energy system installation, since there are different jurisdictions in who is responsible for which installation. No personally identifiable information is included, since the data collected is only on installed renewable energy systems, preserving the confidentiality of individuals associated with the installations.
+
+The raw dataset has been downloaded using the opendatatoronto package [@citeopendatatoronto] and contained 100 unique observations and 41 variable columns. This dataset has then been cleaned using the packages tidyverse [@citetidyverse], lubridate [@citelubridate], and stringr [@citestringr]. First, only the variables of interest were selected: ID, type of installation, date of installation, and size of installation. An additional year of installation variable was created to simplify certain aspects of the analysis. The ID and date of installation variables are self-explanatory. Size of installation refers to the kilowatts (kW) that are measured at each of the installations. Type of Installation refers to whether the system falls under the FIT or microFIT program. FIT, or "Feed-In Tariff", is a program developed by the Ontario Power Authority which guarantees long-term financing and contracting for program participants, meant to incentivize the use of renewable energy sources [@FIT]. microFIT is part of the wider FIT program, but for smaller installations (10 kW or less). 
+
+In the final cleaned dataset, shown in @tbl-cleaneddata, IDs are between 1 and 100, with no duplicates. Size of Installation, with the variable name `SIZE_INSTALL`, takes values between 1.2 and 500.0 kW. The distribution is right-skewed, as shown in @fig-sizehisto. As can be seen in @tbl-sizesummary, the mean and median sizes are 88.1 and 68.5 kW, respectively, with a standard deviation of 102.82 kW. Taking a closer look at `TYPE_INSTALL` in @fig-typebar, we see that the majority of installations are of the FIT type, followed by microFIT, and only 2 storage installations. This is consistent with the size distribution, since microFIT only applies to installations with less than 10 kW.
+
+Date of installation, with the variable name `DATE_INSTALL`, takes dates from the 31st of March 2010, to the 1st of January 2019. As seen in @fig-yearinstallation, the distribution is left-skewed with the highest number of new renewable energy systems installed was in 2018 with 31, whereas the lowest number of new systems was in 2019 with 1. While the original dataset was most recently updated in 2022, there are no entries beyond the single new installation in 2019. We can make the inference that since the beginning of 2019, there has not been any new data collected. Therefore, we should not extrapolate too much beyond the timeframe of 2010 to 2018.
 
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
+#| label: tbl-cleaneddata
+#| tbl-cap: "Cleaned Data of Renewable Energy Installations"
 #| echo: false
-
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
-```
-
-Talk more about it.
-
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
-
-```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
-#| echo: false
-#| warning: false
 #| message: false
-
-analysis_data <- read_csv(here::here("outputs/data/analysis_data.csv"))
-
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
-  theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
-```
-
-Talk way more about it. 
-
-
-
-# Model
-
-The goal of our modelling strategy is twofold. Firstly,...
-
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
-
-## Model set-up
-
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
-
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
-\end{align}
-
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
-
-
-### Model justification
-
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
-
-We can use maths by including latex between dollar signs, for instance $\theta$.
-
-
-# Results
-
-Our results are summarized in @tbl-modelresults.
-
-```{r}
-#| echo: false
-#| eval: true
 #| warning: false
-#| message: false
 
-library(rstanarm)
 
-first_model <-
-  readRDS(file = here::here("outputs/models/first_model.rds"))
+cleaned_data <- read_csv(here::here("outputs/data/analysis_data.csv"))
+
+cleaned_data %>% head() %>% kable()
+
 ```
 
 ```{r}
+#| label: tbl-sizesummary
+#| tbl-cap: "Size of Installation Summary Statistics"
 #| echo: false
-#| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
-#| warning: false
 
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = "mad",
-  fmt = 2
-)
+cleaned_data %>% summarize(Mean = round(mean(SIZE_INSTALL),2), Median = median(SIZE_INSTALL), SD = round(sd(SIZE_INSTALL), 2)) %>% kable()
+
+
+
 ```
 
+```{r}
+#| label: fig-sizehisto
+#| fig-cap: "Distribution of size of installation"
+#| echo: false
+#| warning: false
 
+cleaned_data %>% ggplot(aes (x= SIZE_INSTALL)) + geom_histogram(bins=15) + labs(x="Size (kW)")
+```
 
+```{r}
+#| label: fig-yearinstallation
+#| fig-cap: "Count of new installations per year"
+#| echo: false
+#| warning: false
 
-# Discussion
+cleaned_data %>% ggplot(aes (x= factor(YEAR_INSTALL))) + geom_histogram(stat = "count") + labs(x="Year")
+```
+```{r}
+#| label: fig-typebar
+#| fig-cap: "Types of Installations"
+#| echo: false
+#| warning: false
 
-## First discussion point {#sec-first-point}
+cleaned_data %>% ggplot(aes (x= factor(TYPE_INSTALL))) + geom_bar() + labs(x="Type")
+```
 
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
+@fig-yearinstallation shows a clear upwards trend in the number of newly installed renewable energy systems per year. Until 2016, the number of new systems did not exceed 10, with the exception of 2015, which saw 14 new installations. However, there is a sudden spike in 2017 with over 20 new installations - a development that was also maintained in 2018 with over 30 new installations. Thus, more than half of all systems in the designated timeframe were installed in 2017 and 2018 alone.
 
-## Second discussion point
+\newpage
 
-## Third discussion point
+@fig-yearsize compares the sizes of new installations over time. Most strikingly, the variance of size does not seem to be constant over the years, with very large variation in 2016 and 2018. Therefore, a key assumption of linear regression is not met [@SCHMIDT], and the modest increase in size shown by the fitted regression line cannot be interpreted with certainty as an underlying increase in installation size over the years. Moreover, when taking a closer look at the dataset, it becomes also clear that the size of the installation is directly linked to the type of installation. In 2017, for example, as shown in @fig-typeinstallation, the majority of new installations were "MicroFIT" instead of the larger "FIT" systems. Therefore, size values are much smaller in 2017 than they are in 2018.
 
-## Weaknesses and next steps
+```{r}
+#| label: fig-yearsize
+#| fig-cap: "Size of new installations over time with fitted regression line"
+#| echo: false
+#| warning: false
 
-Weaknesses and next steps should also be included.
+cleaned_data %>% ggplot(aes (x= DATE_INSTALL, y=SIZE_INSTALL, color=TYPE_INSTALL)) + geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") + labs(x="Year", y = "Size", fill="Type of Installation")
+```
+
+```{r}
+#| label: fig-typeinstallation
+#| fig-cap: "Count of new installations by type per year"
+#| echo: false
+#| warning: false
+
+cleaned_data %>% ggplot(aes (x= factor(YEAR_INSTALL), fill = TYPE_INSTALL)) + geom_histogram(stat = "count") + labs(x="Year", fill="Type of Installation") 
+```
 
 \newpage
 
 \appendix
 
-# Appendix {-}
+# Appendix {#sec-appendix}
 
-
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
-
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
-
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
-
-```{r}
-#| eval: true
-#| echo: false
-#| message: false
-#| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
-
-pp_check(first_model) +
-  theme_classic() +
-  theme(legend.position = "bottom")
-
-posterior_vs_prior(first_model) +
-  theme_minimal() +
-  scale_color_brewer(palette = "Set1") +
-  theme(legend.position = "bottom") +
-  coord_flip()
-```
-
-## Diagnostics
-
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
-
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
-
-```{r}
-#| echo: false
-#| eval: true
-#| message: false
-#| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
-
-plot(first_model, "trace")
-
-plot(first_model, "rhat")
-```
+## Data Cleaning
+ID and size of installation did not require any further processing and are both of type 'double'. Type of Installation required some cleaning: Typos were fixed and similar types were merged together (e.g. "MicroFIT A" and "MicroFIT B" were combined into "MicroFIT"). The date of installation required some processing, namely the standardization into one date format and imputing missing month or day values to January or the first day of the month, respectively. For a less granular analysis of when installations occured, I also created an additional year of installation variable, based on the original date of installation.
 
 
 
