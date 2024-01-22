@@ -1,62 +1,101 @@
-id,name,length,width,has_boards,size
-43568,Albert Campbell Square - Outdoor Ice Pad,NA,NA,No,NA
-43573,Harry Gairey - Alexandra Park - Outdoor Ice Pad,180,120,Yes,21600
-43575,Broadlands Park - Outdoor Ice Pad,185,85,Yes,15725
-43576,Buttonwood Park - Outdoor Ice Pad,150,120,No,18000
-43577,Campbell Avenue Playground - Outdoor Ice Pad,180,80,Yes,14400
-43562,Cedarvale Park - Outdoor Ice Pad,NA,NA,Yes,NA
-43578,Sid Smith - Outdoor Ice Pad,180,50,Yes,9000
-43581,Dieppe Park - Outdoor Ice Pad,180,120,Yes,21600
-43727,Dufferin Grove Park - Outdoor Ice Pad (1),180,120,Yes,21600
-43582,Dufferin Grove Park - Outdoor Ice Pad (2),NA,NA,No,NA
-75906,Ethennonnhawahstihnen Park - Outdoor Ice Pad,NA,NA,NA,NA
-14276,Giovanni Caboto - Outdoor Ice Pad (1),180,120,Yes,21600
-43583,Giovanni Caboto - Outdoor Ice Pad (2),NA,NA,No,NA
-43585,Glen Long Community Centre - Outdoor Ice Pad,185,85,Yes,15725
-43586,Greenwood Park - Outdoor Ice Pad,180,120,Yes,21600
-14282,High Park - Outdoor Ice Pad (1),180,120,Yes,21600
-43587,High Park - Outdoor Ice Pad (2),NA,NA,No,NA
-14283,Hodgson Public School - Outdoor Ice Pad (1),180,120,Yes,21600
-43588,Hodgson Public School - Outdoor Ice Pad (2),NA,NA,No,NA
-43589,Humber Valley Rink - Outdoor Ice Pad,185,80,Yes,14800
-43590,Irving W. Chapley Community Centre - Outdoor Ice Pad,185,85,Yes,15725
-43591,Jimmie Simpson Park - Outdoor Ice Pad,100,80,Yes,8000
-43572,Joseph Bannon Park - Outdoor Ice Pad,NA,NA,No,NA
-44162,Kew Gardens - Outdoor Ice Pad,182,72,Yes,13104
-43563,Lambton - Kingsway Park - Outdoor Ice Pad,120,100,No,12000
-43564,Ledbury Park - Outdoor Ice Pad,289,49,Yes,14161
-60143,Mccowan District Park - Outdoor Ice Pad,NA,NA,Yes,NA
-43592,Mel Lastman Square - Outdoor Ice Pad,132,58,No,7656
-43593,Monarch Park - Outdoor Ice Pad,180,80,Yes,14400
-43599,Nathan Phillips Square - Outdoor Ice Pad,182,100,No,18200
-43728,North Toronto Memorial - Outdoor Ice Pad (1),180,135,Yes,24300
-43584,North Toronto Memorial - Outdoor Ice Pad (2),NA,NA,No,NA
-43566,Otter Creek Centre - Outdoor Ice Pad (1),180,120,Yes,21600
-14070,Otter Creek Centre - Outdoor Ice Pad (2),NA,NA,No,NA
-43594,Prince Of Wales Rink - Outdoor Ice Pad,195,85,Yes,16575
-72802,Queensway Park - Outdoor Ice Pad,150,70,No,10500
-14293,Ramsden Park - Outdoor Ice Pad (1),180,120,Yes,21600
-43596,Ramsden Park - Outdoor Ice Pad (2),NA,NA,No,NA
-43598,Regent Park Athletic Grounds - Outdoor Ice Pad,120,80,Yes,9600
-43614,Rennie Park - Outdoor Ice Pad,185,80,Yes,14800
-43567,Rivercrest Rink - Outdoor Ice Pad,150,120,No,18000
-71802,Riverdale Park East - Outdoor Ice Pad,180,80,Yes,14400
-43601,Rosedale Park - Outdoor Ice Pad,182,78,Yes,14196
-43602,Royal Crest Rink - Outdoor Ice Pad,145,120,No,17400
-43574,Ryerson Community Park - Outdoor Ice Pad,110,94,No,10340
-43569,Paul Quarrington - Outdoor Ice Pad,NA,NA,No,NA
-43604,Sir Adam Beck Rink - Outdoor Ice Pad,145,120,Yes,17400
-43605,Summerlea Rink - Outdoor Ice Pad,120,90,No,10800
-43606,Sunnydale Acres Rink - Outdoor Ice Pad,185,85,Yes,15725
-43607,Trinity Bellwoods Park - Outdoor Ice Pad,180,80,Yes,14400
-43608,Valleyfield Park - Outdoor Ice Pad,150,73,No,10950
-43570,Van Horne Park - Outdoor Ice Pad,185,85,No,15725
-43609,Wallace Emerson Park - Outdoor Ice Pad (1),180,120,Yes,21600
-14306,Wallace Emerson Park - Outdoor Ice Pad (2),NA,NA,No,NA
-43610,Wedgewood Park - Etobicoke - Outdoor Ice Pad,150,75,No,11250
-43571,West Deane Park - Outdoor Ice Pad,185,85,Yes,15725
-44022,West Mall Rink - Outdoor Ice Pad (1),185,80,Yes,14800
-43580,West Mall Rink - Outdoor Ice Pad (2),NA,NA,No,NA
-43611,Westgrove Rink - Outdoor Ice Pad,123,100,No,12300
-43612,Westway Outdoor Rink - Outdoor Ice Pad,185,85,Yes,15725
-43613,Withrow Park - Outdoor Ice Pad,180,80,Yes,14400
+ID,TYPE_INSTALL,DATE_INSTALL,SIZE_INSTALL,YEAR_INSTALL
+1,FIT,2010-03-31,50,2010
+2,FIT,2012-02-08,30,2012
+3,MicroFIT,2010-12-23,1.2,2010
+4,MicroFIT,2010-07-12,3.2,2010
+5,FIT,2013-02-27,62,2013
+6,FIT,2013-03-26,216,2013
+86,MicroFIT,2017-08-01,10,2017
+7,FIT,2013-03-27,90,2013
+84,MicroFIT,2017-06-19,10,2017
+8,FIT,2013-03-22,75,2013
+9,FIT,2013-03-03,75,2013
+10,FIT,2013-02-27,75,2013
+11,FIT,2013-03-01,90,2013
+12,FIT,2013-02-27,94,2013
+13,FIT,2013-02-20,48,2013
+14,FIT,2011-06-14,210,2011
+15,FIT,2016-03-03,100,2016
+16,FIT,2016-02-11,300,2016
+17,FIT,2016-02-19,150,2016
+18,FIT,2017-08-01,75,2017
+19,FIT,2016-03-03,150,2016
+20,FIT,2016-02-19,150,2016
+21,FIT,2016-02-04,130,2016
+22,FIT,2015-12-15,175,2015
+23,FIT,2016-02-11,175,2016
+24,FIT,2016-02-19,100,2016
+25,FIT,2018-01-31,140,2018
+26,FIT,2017-11-27,49.9,2017
+27,FIT,2018-06-06,40,2018
+28,FIT,2018-03-09,500,2018
+29,FIT,2018-02-02,200,2018
+30,FIT,2018-03-09,100,2018
+31,FIT,2018-03-21,120,2018
+32,FIT,2018-01-31,500,2018
+87,MicroFIT,2017-04-21,10,2017
+57,FIT,2018-02-02,49.9,2018
+33,FIT,2017-11-15,46,2017
+34,FIT,2018-02-15,240,2018
+35,FIT,2018-02-02,100,2018
+36,FIT,2018-03-21,140,2018
+37,FIT,2018-01-26,80,2018
+38,FIT,2018-02-12,100,2018
+39,FIT,2018-01-31,120,2018
+40,FIT,2018-03-01,100,2018
+41,FIT,2018-03-01,100,2018
+42,FIT,2017-08-01,150,2017
+43,FIT,2018-01-29,130,2018
+44,FIT,2018-01-26,140,2018
+45,FIT,2018-01-31,130,2018
+46,FIT,2018-01-29,220,2018
+47,FIT,2018-01-19,80,2018
+48,FIT,2018-02-02,100,2018
+49,FIT,2018-02-02,50,2018
+50,FIT,2018-02-02,100,2018
+51,FIT,2018-03-01,240,2018
+52,FIT,2017-08-28,40,2017
+53,FIT,2017-11-27,130,2017
+54,FIT,2018-02-02,120,2018
+55,FIT,2017-08-28,130,2017
+56,FIT,2018-03-20,100,2018
+58,FIT,2018-02-02,240,2018
+59,FIT,2018-02-23,300,2018
+60,FIT,2018-03-13,500,2018
+61,MicroFIT,2014-02-19,10,2014
+62,MicroFIT,2014-02-20,10,2014
+63,MicroFIT,2014-02-10,4,2014
+64,MicroFIT,2014-02-12,10,2014
+65,MicroFIT,2014-02-12,10,2014
+74,MicroFIT,2015-11-27,10,2015
+66,MicroFIT,2014-12-21,4,2014
+67,MicroFIT,2015-12-04,10,2015
+68,MicroFIT,2015-11-25,10,2015
+69,MicroFIT,2015-08-27,10,2015
+70,MicroFIT,2015-12-01,10,2015
+71,MicroFIT,2015-12-17,10,2015
+72,MicroFIT,2015-11-17,10,2015
+73,MicroFIT,2015-11-26,10,2015
+75,MicroFIT,2015-11-09,10,2015
+76,MicroFIT,2016-01-13,10,2016
+77,MicroFIT,2015-11-23,10,2015
+78,MicroFIT,2015-11-16,10,2015
+79,MicroFIT,2015-11-16,10,2015
+80,MicroFIT,2015-11-16,10,2015
+81,MicroFIT,2017-06-02,10,2017
+82,MicroFIT,2017-11-09,10,2017
+83,MicroFIT,2017-05-15,10,2017
+85,MicroFIT,2017-10-23,10,2017
+88,MicroFIT,2017-11-29,10,2017
+89,MicroFIT,2017-11-08,10,2017
+90,MicroFIT,2017-06-13,10,2017
+91,MicroFIT,2017-10-26,10,2017
+92,MicroFIT,2017-05-17,10,2017
+93,MicroFIT,2017-08-02,10,2017
+94,MicroFIT,2017-11-16,10,2017
+95,MicroFIT,2017-09-06,10,2017
+96,MicroFIT,2017-09-29,10,2017
+97,MicroFIT,2012-06-18,21,2012
+98,FIT,2012-07-11,86.4,2012
+99,Storage + NM,2019-01-01,10,2019
+100,Storage + NM,2018-01-01,94,2018

@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Tests the cleaned Toronto Outdoor Ice Rink dataset
+# Purpose: Tests the cleaned Toronto Renewable Energ Systems dataset
 # Author: Sami El Sabri
 # Date: 19 January 2024
 # Contact: sami.elsabri@mail.utoronto.ca 
@@ -11,39 +11,40 @@
 library(tidyverse)
 library(testthat)
 
+#### Read in data ####
+cleaned_data <- read_csv("outputs/data/analysis_data.csv")
+
 #### Test data ####
 
 test_that("All expected columns are present", {
-  expect_true("id" %in% colnames(cleaned_data))
-  expect_true("name" %in% colnames(cleaned_data))
-  expect_true("length" %in% colnames(cleaned_data))
-  expect_true("width" %in% colnames(cleaned_data))
-  expect_true("has_boards" %in% colnames(cleaned_data))
-  expect_true("size" %in% colnames(cleaned_data))
+  expect_true("ID" %in% colnames(cleaned_data))
+  expect_true("DATE_INSTALL" %in% colnames(cleaned_data))
+  expect_true("SIZE_INSTALL" %in% colnames(cleaned_data))
+  expect_true("TYPE_INSTALL" %in% colnames(cleaned_data))
+  expect_true("YEAR_INSTALL" %in% colnames(cleaned_data))
 })
 
-test_that("No rows with 'Trail' in the name column", {
-  expect_equal(sum(str_detect(cleaned_data$name, "Trail")), 0)
-})
-
-test_that("No zero width values after imputation", {
-  expect_true(all(cleaned_data$width != 0 | is.na(cleaned_data$width)))
-})
-
-
-test_that("No zero length values after imputation", {
-  expect_true(all(cleaned_data$length != 0 | is.na(cleaned_data$length)))
-})
-
-
-test_that("Size calculation is accurate", {
-  expect_equal(cleaned_data$size, cleaned_data$length * cleaned_data$width, tolerance = 1e-6)
-})
 
 test_that("No missing values in crucial columns", {
-  expect_equal(sum(is.na(cleaned_data$id)), 0)
-  expect_equal(sum(is.na(cleaned_data$name)), 0)
+  expect_equal(sum(is.na(cleaned_data$DATE_INSTALL)), 0)
+  expect_equal(sum(is.na(cleaned_data$SIZE_INSTALL)), 0)
+  expect_equal(sum(is.na(cleaned_data$TYPE_INSTALL)), 0)
 })
+
+test_that("Date format is YYYY-MM-DD", {
+  expected_dates <- format(cleaned_data$DATE_INSTALL, "%Y-%m-%d")
+  
+  cleaned_data$DATE_INSTALL <- format(cleaned_data$DATE_INSTALL, "%Y-%m-%d")
+  
+  expect_equal(cleaned_data$DATE_INSTALL, expected_dates)
+})
+
+test_that("YEAR_INSTALL is equal to the year in DATE_INSTALL", {
+  expected_year <- substr(cleaned_data$DATE_INSTALL, 1, 4)
+
+  expect_equal(cleaned_data$YEAR_INSTALL, expected_year)
+})
+
 
 
 

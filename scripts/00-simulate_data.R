@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Simulates Toronto Outdoor Ice Rinks dataset
+# Purpose: Simulates Toronto Renewable Energy Systems dataset
 # Author: Sami El Sabri
 # Date: 19 January 2024
 # Contact: sami.elsabri@mail.utoronto.ca
@@ -9,49 +9,52 @@
 #### Workspace setup ####
 library(tidyverse)
 library(dplyr)
+library(lubridate)
+library(testthat)
 
 #### Simulate data ####
 set.seed(456)
 
 num_rows <- 50
-outdoor_rink_ids <- 1:num_rows
 
-min_length <- 75
-min_width <- 75
+ids <- 1:num_rows
 
-max_length <- 200
-max_width <- 200
+start_date <- as.Date("2010-01-01")
+end_date <- as.Date("2023-12-31")
 
-lengths <- round(runif(num_rows, min = min_length, max = max_length), 2)
-widths <- round(runif(num_rows, min = min_width, max = max_width), 2)
+# Use sample on a sequence of integers and then convert to dates
+random_days <- sample(as.integer(seq(start_date, end_date, by = "days")), num_rows)
 
-has_boards <- sample(c(TRUE, FALSE), size = num_rows, replace = TRUE)
+# Convert the sampled integers back to dates
+dates <- as.Date(random_days, origin = "1970-01-01")
 
-area_size <- round(lengths * widths, 2)
+min_size <- 50
+max_size <- 200
+size <- sample(round(runif(num_rows, min = min_size, max = max_size), 2))
 
-simulated_rink_size_data <-
+
+
+simulated_data <-
   data.frame(
-    Outdoor_Rink_ID = outdoor_rink_ids,
-    Pad_Length = lengths,
-    Pad_Width = widths,
-    Pad_Size = area_size,
-    has_Boards = has_boards
+    ID = ids,
+    installation_date = dates,
+    size = size
   )
 
 # Some Tests
 
-simulated_rink_size_data$Outdoor_Rink_ID %>% unique() == c(1:num_rows)
-simulated_rink_size_data$Outdoor_Rink_ID %>% unique() %>% length() == num_rows
+simulated_data$ID %>% unique() == c(1:num_rows)
+simulated_data$ID %>% unique() %>% length() == num_rows
 
-simulated_rink_size_data$Pad_Length %>% min() >= min_length
-simulated_rink_size_data$Pad_Length %>% max() <= max_length
+simulated_data$size %>% min() >= min_size
+simulated_data$size %>% max() <= max_size
 
-simulated_rink_size_data$Pad_Width %>% min() >= min_width
-simulated_rink_size_data$Pad_Width %>% max() <= max_width
-
-simulated_rink_size_data$Pad_Size == 
-  round(simulated_rink_size_data$Pad_Length *
-      simulated_rink_size_data$Pad_Width, 2)
+test_that("All installation dates are after the start date", {
+  expect_true(all(simulated_data$installation_date >= start_date))
+})
+test_that("All installation dates are before the end date", {
+  expect_true(all(simulated_data$installation_date <= end_date))
+})
 
 
 
