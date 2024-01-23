@@ -22,6 +22,7 @@ test_that("All expected columns are present", {
   expect_true("SIZE_INSTALL" %in% colnames(cleaned_data))
   expect_true("TYPE_INSTALL" %in% colnames(cleaned_data))
   expect_true("YEAR_INSTALL" %in% colnames(cleaned_data))
+  expect_true("WARD" %in% colnames(cleaned_data))
 })
 
 

@@ -15,9 +15,22 @@ library(lubridate)
 raw_data <- read_csv("inputs/data/raw_data.csv")
 
 cleaned_data <- raw_data %>% select(ID,
+                                    SIZE_INSTALL,
                                     TYPE_INSTALL,
                                     YEAR_INSTALL,
-                                    SIZE_INSTALL) 
+                                    geometry) 
+
+#  split geometry into longitude and latitude
+cleaned_data <- cleaned_data %>% rename(LOCATION = geometry)
+
+cleaned_data$LOCATION <- gsub("c\\(|\\)", "", cleaned_data$LOCATION)
+
+cleaned_data <- cbind(cleaned_data, do.call(rbind, strsplit(as.character(cleaned_data$LOCATION), ", ")))
+colnames(cleaned_data)[6:7] <- c("LONGITUDE", "LATITUDE")
+cleaned_data[, c("LONGITUDE", "LATITUDE")] <- lapply(cleaned_data[, c("LONGITUDE", "LATITUDE")], as.numeric)
+
+cleaned_data <- subset(cleaned_data, select = -LOCATION)
+
 
 # clean type of installation column
 cleaned_data <- cleaned_data %>% 
@@ -26,6 +39,7 @@ cleaned_data <- cleaned_data %>%
                                gsub("MircoFIT", "MicroFIT", TYPE_INSTALL), 
                                TYPE_INSTALL)
   )
+
 
 cleaned_data <- cleaned_data %>%
   mutate(
@@ -53,6 +67,17 @@ cleaned_data <- cleaned_data %>% rename(DATE_INSTALL = YEAR_INSTALL)
 # create new variable based on data of installation, which only shows the year
 cleaned_data$YEAR_INSTALL <- format(as.Date(cleaned_data$DATE_INSTALL), "%Y")
 
+# rename all columns for easier handling
+cleaned_data <- cleaned_data %>% rename(
+  size = SIZE_INSTALL,
+  type = TYPE_INSTALL,
+  date = DATE_INSTALL,
+  year = YEAR_INSTALL,
+  latitude = LATITUDE,
+  longitude = LONGITUDE
+)
+
 
 #### Save data ####
 write_csv(cleaned_data, "outputs/data/analysis_data.csv")
+
