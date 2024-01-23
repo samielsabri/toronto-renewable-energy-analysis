@@ -1,4 +1,4 @@
-# Starter folder
+# Toronto Renewable Energy Systems Data Analysis
 
 ## Overview
 
