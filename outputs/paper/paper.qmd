@@ -5,8 +5,9 @@ author:
 thanks: "Code and data are available at: https://github.com/samielsabri/toronto-renewable-energy-analysis"
 date: 01-24-2024
 date-format: long
-abstract: "This paper investigates the trend of renewable energy installations on City-owned buildings in Toronto by analyzing an openly accessible dataset. The analysis reveals a significant increase in installations, particularly in 2017 and 2018, aligning with the city's commitment to carbon neutrality by 2040. There is also a notable diversification in installation types for different urban contexts. The findings offer an important insght into the dynamic nature of renewable energy adoption, and highlights the need for continued efforts in transitioning towards cleaner energy systems. "
+abstract: "This paper investigates the trend of renewable energy installations on City-owned buildings in Toronto by analyzing an openly accessible dataset. The analysis reveals a significant increase in installations, particularly in 2017 and 2018, aligning with the city's commitment to carbon neutrality by 2040. There is also a notable diversification in installation types for different urban contexts, as well as strategic expansion into Toronto's periphery. The findings offer an important insght into the dynamic nature of renewable energy adoption, and highlights the need for continued efforts in transitioning towards cleaner energy systems. "
 format: pdf
+toc: true
 number-sections: true
 bibliography: references.bib
 ---
@@ -19,6 +20,8 @@ bibliography: references.bib
 library(tidyverse)
 library(knitr)
 library(ggplot2)
+library(tmap)
+library(sf)
 ```
 
 
@@ -30,18 +33,18 @@ As the largest city in Canada, Toronto stands at the forefront of sustainable ur
 
 This paper may bridge this knowledge gap by analyzing a publically available dataset on renewable energy installations in Toronto. The findings reveal a compelling upward trajectory in the number of installations, notably peaking in 2017 and 2018. Moreover, while there is no clear trend in the kilowatt (kW) size of installations, we can observe efforts to diversify the types of installations, with both smaller and larger installations seeing an increase.
 
-In order to investigate the trend of renewable energy installations to assess whether there is indeed an upwards trajectory in both the quantity and quality of installations by the City of Toronto, this paper has been structured as follows: First, the raw dataset of interest is introduced and relevant variables explained (@sec-data). The reproducible data cleaning process can be found in the appendix (@sec-appendix). Then, the cleaned dataset is explained and important summary statistics outlined. Finally, the data is visualized and contextualized in order to draw conclusions from it, which contribute to the broader understanding of Toronto's renewable energy efforts. 
+In order to investigate the trend of renewable energy installations to assess whether there is indeed an upwards trajectory in both the quantity and quality of installations by the City of Toronto, this paper has been structured as follows: First, the raw dataset of interest is introduced (@sec-datasource) and then all relevant variables described, explained, and visualized (@sec-datachar). The reproducible data cleaning process can be found in the appendix (@sec-appendix). Then, the results section (@sec-results) highlights trends and interactions between variables. Finally, in the discussion (@sec-discussion), the data and results are contextualized in order to draw conclusions from it, which contribute to the broader understanding of Toronto's renewable energy efforts. 
 
 
 # Data {#sec-data}
+## Data Source and Measurement {#sec-datasource}
+This report utilizes data published by the City of Toronto's Facilities Management Division on the city's Open Data Portal and is titled "Renewable Energy Installations" [@opendatatoronto]. Specifically, the Facilities Management Division collected the locations of installed renewable energy systems on city-owned buildings such as photovoltaic, solar pool heating, and geothermal installations. The dataset was last updated Apr 22, 2022, but only contains observations from 2010 until 2019. The aforementioned increased relevance of renewable energy in Toronto's combat with climate change gave rise to this dataset. However, due to the data collection method and the Facilities Management Division as the primary data collector, a key limitation of this dataset is that it only includes city divisions, but not all city agencies or corporations. This highlights a key difficulty of measuring data related to renewable energy system installation, since there are different jurisdictions in who is responsible for which installation. No personally identifiable information is included, since the data collected is only on installed renewable energy systems, preserving the confidentiality of individuals associated with the installations.
 
-The dataset that is analyzed in this paper using R [@citeR] was obtained on the City of Toronto's Open Data Portal and is titled "Renewable Energy Installations" [@opendatatoronto]. Specifically, they collected the locations of installed renewable energy systems on city-owned buildings such as photovoltaic, solar pool heating, and geothermal installations. The aforementioned increased relevance of renewable energy in Toronto's combat with climate change gave rise to this dataset. However, one limitation of this dataset is that it only includes city divisions, but not all city agencies or corporations. This highlights a key difficulty of measuring data related to renewable energy system installation, since there are different jurisdictions in who is responsible for which installation. No personally identifiable information is included, since the data collected is only on installed renewable energy systems, preserving the confidentiality of individuals associated with the installations.
+The dataset was analyzed using R [@citeR] and downloaded using the R package opendatatoronto [@citeopendatatoronto]. Additionally, the packages tidyverse [@citetidyverse], lubridate [@citelubridate], stringr [@citestringr], sf [@citesf], and tmap [@citetmap] have been used in data cleaning and visualization.
 
-The raw dataset has been downloaded using the opendatatoronto package [@citeopendatatoronto] and contained 100 unique observations and 41 variable columns. This dataset has then been cleaned using the packages tidyverse [@citetidyverse], lubridate [@citelubridate], and stringr [@citestringr]. First, only the variables of interest were selected: ID, type of installation, date of installation, and size of installation. An additional year of installation variable was created to simplify certain aspects of the analysis. The ID and date of installation variables are self-explanatory. Size of installation refers to the kilowatts (kW) that are measured at each of the installations. Type of Installation refers to whether the system falls under the FIT or microFIT program. FIT, or "Feed-In Tariff", is a program developed by the Ontario Power Authority which guarantees long-term financing and contracting for program participants, meant to incentivize the use of renewable energy sources [@FIT]. microFIT is part of the wider FIT program, but for smaller installations (10 kW or less). 
+## Data Characteristics {#sec-datachar}
 
-In the final cleaned dataset, shown in @tbl-cleaneddata, IDs are between 1 and 100, with no duplicates. Size of Installation, with the variable name `SIZE_INSTALL`, takes values between 1.2 and 500.0 kW. The distribution is right-skewed, as shown in @fig-sizehisto. As can be seen in @tbl-sizesummary, the mean and median sizes are 88.1 and 68.5 kW, respectively, with a standard deviation of 102.82 kW. Taking a closer look at `TYPE_INSTALL` in @fig-typebar, we see that the majority of installations are of the FIT type, followed by microFIT, and only 2 storage installations. This is consistent with the size distribution, since microFIT only applies to installations with less than 10 kW.
-
-Date of installation, with the variable name `DATE_INSTALL`, takes dates from the 31st of March 2010, to the 1st of January 2019. As seen in @fig-yearinstallation, the distribution is left-skewed with the highest number of new renewable energy systems installed was in 2018 with 31, whereas the lowest number of new systems was in 2019 with 1. While the original dataset was most recently updated in 2022, there are no entries beyond the single new installation in 2019. We can make the inference that since the beginning of 2019, there has not been any new data collected. Therefore, we should not extrapolate too much beyond the timeframe of 2010 to 2018.
+The raw dataset contained 100 unique observations and 41 variable columns, most of which with either constant or missing values. Most columns referred to geospatial data and were deemed beyond the scope of this report. In the first basic cleaning steps, only certain variables of interest were selected: ID, type of installation, date of installation, size of installation, and the location (given by coordinates). From the date of installation, I created an additional year of installation variable. From the location, the two colummns latitude and longitude were extracted, for simpler analysis. A glimpse of the final cleaned dataset can be seen in @tbl-cleaneddata.
 
 ```{r}
 #| label: tbl-cleaneddata
@@ -57,12 +60,15 @@ cleaned_data %>% head() %>% kable()
 
 ```
 
+### Size of Installation
+The size of installation represents the power capacity of each installation, measured in kilowatts (kW). All installations fall within the range of 1.2 kW to 500.0 kW. As summarized in Table 1 (@tbl-sizesummary), the mean size of installations is 88.1 kW, showcasing the average power capacity across the dataset. The median size, a robust measure of central tendency, is slightly lower at 68.5 kW. The difference between the mean and median suggests the presence of outliers or a skewed distribution. Indeed, the histogram (@fig-sizehisto)  reveals a right-skewed distribution, indicating a higher concentration of installations at the lower end of the size spectrum and very few observations at the upper end of the spectrum. The standard deviation of 102.82 kW reinforces this variability in installation sizes.
+
 ```{r}
 #| label: tbl-sizesummary
 #| tbl-cap: "Size of Installation Summary Statistics"
 #| echo: false
 
-cleaned_data %>% summarize(Mean = round(mean(SIZE_INSTALL),2), Median = median(SIZE_INSTALL), SD = round(sd(SIZE_INSTALL), 2)) %>% kable()
+cleaned_data %>% summarize(Mean = round(mean(size),2), Median = median(size), SD = round(sd(size), 2)) %>% kable()
 
 
 
@@ -74,8 +80,26 @@ cleaned_data %>% summarize(Mean = round(mean(SIZE_INSTALL),2), Median = median(S
 #| echo: false
 #| warning: false
 
-cleaned_data %>% ggplot(aes (x= SIZE_INSTALL)) + geom_histogram(bins=15) + labs(x="Size (kW)")
+cleaned_data %>% ggplot(aes (x= size)) + geom_histogram(bins=15) + labs(x="Size (kW)")
 ```
+
+### Type of Installation
+Type of Installation (`type`) refers to whether the system falls under the FIT or microFIT program (with very few installations being classified as *storage*. FIT, or "Feed-In Tariff", is a program developed by the Ontario Power Authority which guarantees long-term financing and contracting for program participants, meant to incentivize the use of renewable energy sources [@FIT]. microFIT is part of the wider FIT program, but for smaller installations (10 kW or less). 
+
+Taking a closer look at the installation types in @fig-typebar, we see that the majority of installations are of the FIT type, followed by microFIT, and only 2 storage installations. This is consistent with the size distribution discussed in the previous section, since microFIT only applies to installations with less than 10 kW.
+
+```{r}
+#| label: fig-typebar
+#| fig-cap: "Types of Installations"
+#| echo: false
+#| warning: false
+
+cleaned_data %>% ggplot(aes (x= factor(type))) + geom_bar(width=0.7) + labs(x="Type")
+```
+
+### Time of Installation
+
+Date of installation, with the variable name `date`, takes dates from the 31st of March 2010, to the 1st of January 2019. As seen in @fig-yearinstallation, the distribution is left-skewed with the highest number of new renewable energy systems installed was in 2018 with 31, whereas the lowest number of new systems was in 2019 with 1. While the original dataset was most recently updated in 2022, there are no entries beyond the single new installation in 2019. Since there has been no officially released statement by the government indicating the stop of installing renewable energy systems, we can make the inference that since the beginning of 2019, there has simply not been any new data collected by the City of Toronto's Facilities Management Division. Therefore, we should be careful extrapolating beyond the timeframe of 2010 to 2018.
 
 ```{r}
 #| label: fig-yearinstallation
@@ -83,20 +107,34 @@ cleaned_data %>% ggplot(aes (x= SIZE_INSTALL)) + geom_histogram(bins=15) + labs(
 #| echo: false
 #| warning: false
 
-cleaned_data %>% ggplot(aes (x= factor(YEAR_INSTALL))) + geom_histogram(stat = "count") + labs(x="Year")
-```
-```{r}
-#| label: fig-typebar
-#| fig-cap: "Types of Installations"
-#| echo: false
-#| warning: false
-
-cleaned_data %>% ggplot(aes (x= factor(TYPE_INSTALL))) + geom_bar() + labs(x="Type")
+cleaned_data %>% ggplot(aes (x= factor(year))) + geom_histogram(stat = "count") + labs(x="Year")
 ```
 
 @fig-yearinstallation shows a clear upwards trend in the number of newly installed renewable energy systems per year. Until 2016, the number of new systems did not exceed 10, with the exception of 2015, which saw 14 new installations. However, there is a sudden spike in 2017 with over 20 new installations - a development that was also maintained in 2018 with over 30 new installations. Thus, more than half of all systems in the designated timeframe were installed in 2017 and 2018 alone.
 
+### Geographical Distribution of Installations
+The location of an installation is given by its coordinates, which all fall between the boundaries of Toronto. @fig-locations shows a rather even distribution of installations across the city, however with notably low densities in the Etobicoke Centre, Scarborough-Rouge Park, and Don Valley city wards.
+
+```{r}
+#| label: fig-locations
+#| fig-cap: "Locations of renewable energy installations in Toronto"
+#| echo: false
+#| warning: false
+toronto_map <- read_sf(here::here("inputs/data/map_data.gpkg"))
+
+sf_data <- st_as_sf(cleaned_data, coords = c("longitude", "latitude"), crs = 4326)
+
+tm_shape(toronto_map) +
+  tm_borders() +  # Add borders for the Toronto map
+  tm_shape(sf_data) +
+  tm_dots(size = 1.5, col = "red", alpha = 0.7) +
+  tm_basemap(server = "OpenStreetMap") +
+  tm_layout(legend.position = c("left", "top"))
+```
 \newpage
+
+# Results {#sec-results}
+## Size and type of installation over time
 
 @fig-yearsize compares the sizes of new installations over time. Most strikingly, the variance of size does not seem to be constant over the years, with very large variation in 2016 and 2018. Therefore, a key assumption of linear regression is not met [@SCHMIDT], and the modest increase in size shown by the fitted regression line cannot be interpreted with certainty as an underlying increase in installation size over the years. Moreover, when taking a closer look at the dataset, it becomes also clear that the size of the installation is directly linked to the type of installation. In 2017, for example, as shown in @fig-typeinstallation, the majority of new installations were "MicroFIT" instead of the larger "FIT" systems. Therefore, size values are much smaller in 2017 than they are in 2018.
 
@@ -106,7 +144,7 @@ cleaned_data %>% ggplot(aes (x= factor(TYPE_INSTALL))) + geom_bar() + labs(x="Ty
 #| echo: false
 #| warning: false
 
-cleaned_data %>% ggplot(aes (x= DATE_INSTALL, y=SIZE_INSTALL, color=TYPE_INSTALL)) + geom_point() +
+cleaned_data %>% ggplot(aes (x= date, y=size, color=type)) + geom_point() +
   geom_smooth(method = "lm", se = FALSE, color = "blue") + labs(x="Year", y = "Size", fill="Type of Installation")
 ```
 
@@ -116,11 +154,40 @@ cleaned_data %>% ggplot(aes (x= DATE_INSTALL, y=SIZE_INSTALL, color=TYPE_INSTALL
 #| echo: false
 #| warning: false
 
-cleaned_data %>% ggplot(aes (x= factor(YEAR_INSTALL), fill = TYPE_INSTALL)) + geom_histogram(stat = "count") + labs(x="Year", fill="Type of Installation") 
+cleaned_data %>% ggplot(aes (x= factor(year), fill = type)) + geom_histogram(stat = "count") + labs(x="Year", fill="Type of Installation") 
 ```
 
 \newpage
+## Location of Installation over Time
 
+@fig-yearlocation shows that even in earlier years, before the peak, installations were distributed fairly evenly across the city. Due to the low volume in these years, however, there were of course many gaps, which were strategically filled in later years. The map also reveals that there is a notable trend of expanding more into the city's periphery in recent years rather than installing more systems in the downtown core.
+
+```{r}
+#| label: fig-yearlocation
+#| fig-cap: "Geographical Distribution of installations over the years"
+#| echo: false
+#| warning: false
+tm_shape(toronto_map) +
+  tm_borders() +  # Add borders for the Toronto map
+  tm_shape(sf_data) +
+  tm_dots(size = 1.5, col = "year", palette = "Blues", alpha = 0.7, title = "Year") +
+  tm_layout(legend.position = c("right", "bottom"))
+ 
+```
+
+\newpage
+# Discussion {#sec-discussion}
+The examination of a publicly available dataset on renewable energy installations from 2010 to 2019 offers valuable insights into Toronto's renewable energy landscape. The observed upward trajectory in the number of installations, peaking notably in 2017 and 2018, indicates a concerted effort to expand and diversify the city's renewable energy infrastructure. Although the kilowatt size of installations does not exhibit a clear trend, the data reveals a strategic shift towards incorporating a variety of installation types, encompassing both smaller and larger systems.
+
+The subsequent exploration of the relationship between installation size, type, and their distribution over time is crucial to understanding the city's commitment. The regression analysis on installation size over the years, although inconclusive due to varying variances, reinforces how installation size and type interact, and the role that different financing models may play. The concentration of smaller installations in certain years, such as 2017, further emphasizes the importance of considering installation types when interpreting size trends.
+
+The geographical distribution map illustrates how even in earlier years, installations were spread across the city, with subsequent strategic efforts to fill gaps and extend installations into the periphery (e.g. North York and Scarborough) in recent years. This trend signifies a strategic and deliberate expansion beyond the downtown core, reflecting an equitable approach to renewable energy infrastructure.
+
+However, it is essential to acknowledge the limitations of this analysis. The dataset primarily focuses on city divisions, excluding data from other city agencies or public-private partnerships involved in renewable energy initiatives. This limitation may impact the comprehensiveness of the dataset and potentially overlook significant installations managed by other entities.
+
+In conclusion, the city government's commitment towards sustainable energy practices is evident in the increasing number and strategic distribution of renewable energy installations. This analysis contributes to a better understanding of Toronto's commitment to renewable energy, paving the way for informed discussions on the city's progress and future endeavors in combating climate change.
+
+\newpage
 \appendix
 
 # Appendix {#sec-appendix}
