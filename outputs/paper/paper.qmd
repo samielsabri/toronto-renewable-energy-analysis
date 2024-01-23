@@ -31,7 +31,7 @@ As the global community is increasingly faced with the challenges posed by clima
 
 As the largest city in Canada, Toronto stands at the forefront of sustainable urban development in the country. There are multiple initiatives, both at the provincial and local level, to increase the usage of renewable energy such as SolarTO which offers financial incentives [@solarTO], or the Conservation Authority's Renewable Energy Program [@trca]. Most notably, the City of Toronto itself vowed to transform city buildings and facilities according to the Net Zero Carbon Plan, most recently in 2022. The city government plans to achieve net zero in such buildings by 2040 by installing more and more renewable energy systems [@citytoronto], but it is unclear to what extent they have been addressing the urgency of transitioning towards renewable energy. 
 
-This paper may bridge this knowledge gap by analyzing a publically available dataset on renewable energy installations in Toronto. The findings reveal a compelling upward trajectory in the number of installations, notably peaking in 2017 and 2018. Moreover, while there is no clear trend in the kilowatt (kW) size of installations, we can observe efforts to diversify the types of installations, with both smaller and larger installations seeing an increase.
+This paper may bridge this knowledge gap by analyzing a publically available dataset on renewable energy installations in Toronto. The findings reveal a compelling upward trajectory in the number of installations, notably peaking in 2017 and 2018. Moreover, while there is no clear trend in the kilowatt (kW) size of installations, we can observe efforts to diversify the types of installations, with both smaller and larger installations seeing an increase. Moreover, analysis of the geographical distribution revealed strategic efforts to expand into all areas of Toronto over time, including the periphery.
 
 In order to investigate the trend of renewable energy installations to assess whether there is indeed an upwards trajectory in both the quantity and quality of installations by the City of Toronto, this paper has been structured as follows: First, the raw dataset of interest is introduced (@sec-datasource) and then all relevant variables described, explained, and visualized (@sec-datachar). The reproducible data cleaning process can be found in the appendix (@sec-appendix). Then, the results section (@sec-results) highlights trends and interactions between variables. Finally, in the discussion (@sec-discussion), the data and results are contextualized in order to draw conclusions from it, which contribute to the broader understanding of Toronto's renewable energy efforts. 
 
@@ -80,9 +80,9 @@ cleaned_data %>% summarize(Mean = round(mean(size),2), Median = median(size), SD
 #| echo: false
 #| warning: false
 
-cleaned_data %>% ggplot(aes (x= size)) + geom_histogram(bins=15) + labs(x="Size (kW)")
+cleaned_data %>% ggplot(aes (x= size)) + geom_histogram(bins=15) + labs(x="Size (kW)") + theme_minimal()
 ```
-
+\newpage
 ### Type of Installation
 Type of Installation (`type`) refers to whether the system falls under the FIT or microFIT program (with very few installations being classified as *storage*. FIT, or "Feed-In Tariff", is a program developed by the Ontario Power Authority which guarantees long-term financing and contracting for program participants, meant to incentivize the use of renewable energy sources [@FIT]. microFIT is part of the wider FIT program, but for smaller installations (10 kW or less). 
 
@@ -94,7 +94,7 @@ Taking a closer look at the installation types in @fig-typebar, we see that the 
 #| echo: false
 #| warning: false
 
-cleaned_data %>% ggplot(aes (x= factor(type))) + geom_bar(width=0.7) + labs(x="Type")
+cleaned_data %>% ggplot(aes (x= factor(type))) + geom_bar(width=0.7) + labs(x="Type") + theme_minimal()
 ```
 
 ### Time of Installation
