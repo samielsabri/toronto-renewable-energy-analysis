@@ -5,7 +5,7 @@ author:
 thanks: "Code and data are available at: https://github.com/samielsabri/toronto-renewable-energy-analysis"
 date: 01-24-2024
 date-format: long
-abstract: "This paper investigates the trend of renewable energy installations on City-owned buildings in Toronto by analyzing an openly accessible dataset. The analysis reveals a significant increase in installations, particularly in 2017 and 2018, aligning with the city's commitment to carbon neutrality by 2040. There is also a notable diversification in installation types for different urban contexts, as well as strategic expansion into Toronto's periphery. The findings offer an important insght into the dynamic nature of renewable energy adoption, and highlights the need for continued efforts in transitioning towards cleaner energy systems. "
+abstract: "This paper investigates the trend of renewable energy installations on City-owned buildings in Toronto by analyzing an open dataset. The analysis reveals a significant increase in installations, particularly in 2017 and 2018, aligning with the city's commitment to carbon neutrality by 2040. There is also a notable diversification in installation types for different urban contexts, as well as strategic expansion into Toronto's periphery. The findings offer are an insight into the dynamic nature of renewable energy adoption, and highlights the need for continued efforts in transitioning towards cleaner energy systems. "
 format: pdf
 toc: true
 number-sections: true
